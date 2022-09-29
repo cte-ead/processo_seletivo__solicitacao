@@ -6,7 +6,7 @@ from a4.models import Usuario
 
 
 class UnidadeOrganizadora(Model):
-    sigla_completa = CharField(_('tipo de avaliação'), help_text=_('Ex.: DG/ZL/RE/IFRN, PROEN/IFRN'))
+    sigla_completa = CharField(_('tipo de avaliação'), max_length=255, help_text=_('Ex.: DG/ZL/RE/IFRN, PROEN/IFRN'))
 
     class Meta:
         verbose_name = _("unidade organizadora")
@@ -44,7 +44,7 @@ class Edital(Model):
         COLABORADORES = Choices.Value(_("Colaboradores"), value='C')
         INTERNOS = Choices.Value(_("Internos"), value='I')
     
-    tipo = CharField(_('tipo de avaliação'), max_length=1, choices=TipoDeAvaliacao, default=TipoDeAvaliacao.CURRICULUM)
+    tipo = CharField(_('tipo de avaliação'), max_length=2, choices=TipoDeAvaliacao, default=TipoDeAvaliacao.CURRICULUM)
     publico_alvo = CharField(_('público alvo'), max_length=1, choices=PublicoAlvo, default=PublicoAlvo.ALUNOS)
     numero = CharField(_('número do edital'), max_length=255, unique=True)
     ano = CharField(_('ano do edital'), max_length=255)
@@ -58,7 +58,16 @@ class Edital(Model):
         ordering = ['-ano', 'numero']
 
     def __str__(self):
-        return f'{self.numero}/{self.ano}-{self.unidade_organizadora} ({self.tipo} para {self.publico_alvo})'
+        # import ipdb;ipdb.set_trace()
+        return f'{self.identificacao} (do tipo {Edital.TipoDeAvaliacao[self.tipo].display} para {Edital.PublicoAlvo[self.publico_alvo].display})'
+    
+    @property
+    def numeracao(self):
+        return f'{self.numero}/{self.ano}'
+    
+    @property
+    def identificacao(self):
+        return f'{self.numeracao}-{self.unidade_organizadora}'
 
 class TipoArquivo(Model):
     nome = CharField(_('nome'), max_length=255)

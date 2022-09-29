@@ -14,12 +14,12 @@ from django.contrib.auth.decorators import login_required
 #         {"titulo": "Administração", "url": "#Administração", "current": False},
 #         {"titulo": "Qualidade de vida", "url": "#qualidade", "current": False}
 #     ]
-#     # return render(request, 'portal/index.html', context={'categorias': categorias})
-#     return render(request, "portal/dashboard.html", context={'page_title': 'Dashboard v1'})
+#     # return render(request, 'processoseletivo/index.html', context={'categorias': categorias})
+#     return render(request, "processoseletivo/dashboard.html", context={'page_title': 'Dashboard v1'})
 
 # @login_required
 # def contacts(request: HttpRequest) -> HttpResponse:
-#     return render(request, "portal/contacts.html")
+#     return render(request, "processoseletivo/contacts.html")
 
 # def term_of_use(request: HttpRequest) -> HttpResponse:
-#     return render(request, "portal/term_of_use.html")
+#     return render(request, "processoseletivo/term_of_use.html")
