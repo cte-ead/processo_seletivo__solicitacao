@@ -1,0 +1,57 @@
+version: '3.7'
+
+services:
+
+  cache:
+    image: redis:7.0.2-alpine
+    # restart: always
+    env_file:
+      - ./confs/enabled/cache.env
+    volumes:
+      - "./volumes/cache:/data"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]      
+      interval: 3s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+
+  db:
+    image: postgres:14.3-alpine
+    # restart: always
+    env_file:
+      - ./confs/enabled/db.env
+    volumes:
+      - "./volumes/db:/var/lib/postgresql/data"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "app_user"]
+      interval: 3s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+
+  app:
+    image: 'ifrn/processo_seletivo:0.0.1'
+    build: src/python/app
+    # restart: always
+    ports:
+      - '8000:8000'
+    env_file:
+      - ./confs/enabled/cache.env
+      - ./confs/enabled/db.env
+      - ./confs/enabled/app.env
+    volumes:
+      - './src/python/app:/apps/app'
+      - './volumes/media:/var/media'
+      - './volumes/static:/var/static'
+    depends_on:
+      cache:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+      #   healthcheck:
+      #     test: ["CMD-SHELL", "curl --silent --fail http://app:8000/health/ | grep 'Database: OK' || exit 1"]
+      #     interval: 3s
+      #     timeout: 1s
+      #     start_period: 1s
+      #     retries: 30
