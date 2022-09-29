@@ -1,9 +1,9 @@
 from django.urls import path
-from .apps import PortalConfig
-from .views import dashboard, contacts, term_of_use
+from .apps import ProcessoSeletivoConfig
+# from .views import dashboard, contacts, term_of_use
 
 
-app_name = PortalConfig.name
+app_name = ProcessoSeletivoConfig.name
 
 
 urlpatterns = [
