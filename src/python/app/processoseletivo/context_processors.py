@@ -8,11 +8,11 @@
 
 # def layout_settings(request: HttpRequest) -> dict:
 #     return {
-#         "site_title": "Portal",
-#         "layout_home_url_name": "portal:dashboard",
-#         "layout_register_url_name": "portal:register",
-#         "layout_term_of_use_url_name": "portal:term_of_use",
-#         "layout_site_name": "Portal",
+#         "site_title": "Solicitacao de processo seletivo",
+#         "layout_home_url_name": "processoseletivo:dashboard",
+#         "layout_register_url_name": "processoseletivo:register",
+#         "layout_term_of_use_url_name": "processoseletivo:term_of_use",
+#         "layout_site_name": "Solicitacao de processo seletivo",
 #         # "layout_has_navbar_search": True,
 #         # "layout_has_fullscreen_toggler": True,
 #         # "layout_has_customizer": True,
@@ -27,7 +27,7 @@
 #     return {
 #         "layout_navbar_top_menu":
 #         [
-#             {"label": _("Início"), "url": reverse('portal:dashboard'), },
+#             {"label": _("Início"), "url": reverse('processoseletivo:dashboard'), },
 #         ] + staff_menus
 #     }
 
