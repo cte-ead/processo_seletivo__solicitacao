@@ -1,0 +1,46 @@
+# Core
+django==4.1.1
+requests==2.28.1
+
+# My
+sc4py==0.1.4
+# django-theme-adminlte3==3.2.0.6
+
+# Models
+django-better-choices==1.17
+
+# Session
+django-redis-sessions==0.6.2
+
+# Audit
+soft-delete==0.2.2
+django-simple-history==3.1.1
+
+# UI
+# django-crispy-forms==1.14.0
+django-import-export==2.9.0
+django-daterange-filter==1.3.0
+# django-tabbed-admin==1.0.4 
+
+# Devel
+# 3.2.0 deu erro. testar a 3.2.1
+django-extensions==3.1.5
+django-debug-toolbar==3.7.0
+ipython==8.5.0
+# última versão que funciona: 2.0.3, testar a 2.2.2
+Werkzeug==2.0.3
+ipdb==0.13.9
+pudb==2022.1.2
+djlint==1.18.0
+
+# Production
+sentry-sdk==1.9.9
+gunicorn==20.1.0
+supervisor==4.2.4
+
+# Database
+psycopg2-binary==2.9.3
+
+# Image
+# 9.2.0 de erro
+pillow==9.1.1
