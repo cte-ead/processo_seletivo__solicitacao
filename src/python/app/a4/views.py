@@ -2,6 +2,7 @@ from django.utils.translation import gettext as _
 import json
 import urllib
 import requests
+from django.utils.timezone import now
 from django.conf import settings
 from django.contrib import auth
 from django.shortcuts import redirect, render
@@ -25,7 +26,6 @@ def login(request: HttpRequest) -> HttpResponse:
 
 
 def authenticate(request: HttpRequest) -> HttpResponse:
-    from processoseletivo.models import Campus, Polo
     OAUTH = settings.OAUTH
     
     assert 'code' in request.GET, _("O código de autenticação não foi informado.")
@@ -41,21 +41,18 @@ def authenticate(request: HttpRequest) -> HttpResponse:
     headers = {'Authorization': 'Bearer {}'.format(request_data.get('access_token')), 'x-api-key': OAUTH['CLIENT_SECRET']}
     response_data = json.loads(requests.get(f"{OAUTH['BASE_URL']}/api/eu/", data={'scope': request_data.get('scope')}, headers=headers, verify=OAUTH['VERIFY_SSL']).text )
     
+    if 'identificacao' not in response_data:
+        return render(request, "a4/invalid_authenticate.html")
     username = response_data['identificacao']
     user = Usuario.objects.filter(username=username).first()
     if user is None:
         is_superuser = Usuario.objects.count() == 0
         user = Usuario.objects.create(
             username=username,
-            nome=response_data.get('nome'),
-            email=response_data.get('email'),
-            email_escolar=response_data.get('email_google_classroom'),
-            email_academico=response_data.get('email_academico'),
-            email_secundario=response_data.get('email_secundario'),
-            campus=Campus.objects.filter(sigla=response_data.get('campus')).first(),
-            polo=Polo.objects.filter(suap_id=response_data.get('polo')).first(),
-            tipo=Usuario.Tipo.get_by_length(len(username)),
-            # status=response_data.get('status'),
+            first_name=' '.join(response_data.get('nome').split()[:-1]),
+            last_name=' '.join(response_data.get('nome').split()[-1:]),
+            email=response_data.get('email') or response_data.get('email_secundario'),
+            first_login=now(),
             is_superuser=is_superuser,
             is_staff=is_superuser,
         )

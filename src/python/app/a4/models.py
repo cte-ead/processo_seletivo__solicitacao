@@ -9,6 +9,8 @@ class Grupo(Group):
 
 
 class Usuario(AbstractUser):
+    first_login = DateTimeField(_('first login'))
+    
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = []

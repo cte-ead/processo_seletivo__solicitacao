@@ -1,0 +1,29 @@
+{% load static %}
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <title>Login</title>
+    <meta charset="utf-8" />
+    <meta name="keywords" content="Ambiente, Virtual, Aprendizagem, IFRN, AVA" />
+    <meta name="description" content="Ambientes Virtuais Aprendizagem IFRN" />    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+    <style>
+        body {margin: 0; padding: 0; font-family: sans-serif;}
+        header {background: #763940; padding: 20px; color: #fff;}
+        main {padding: 20px; text-align: center;}
+    </style>
+</head>
+
+<body>
+    <header>ERRO</header>
+    <main>
+        <h1>Erro de protocolo de autenticação OAuth.</h1>
+        <p>
+            <i>Tente reiniciar o processo de <a href='{% url 'home' %}'>login</a>.</i>
+        </p>
+    </main>
+</body>
+
+</html>
