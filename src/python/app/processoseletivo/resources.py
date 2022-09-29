@@ -1,6 +1,17 @@
-# from import_export import resources
+from import_export import resources
+from .models import Campus, UnidadeOrganizadora, Edital
 
-# class CandidatoResource(resources.ModelResource):
-#     class Meta:
-#         model = Candidato
 
+class CampusResource(resources.ModelResource):
+    class Meta:
+        model = Campus
+
+
+class UnidadeOrganizadoraResource(resources.ModelResource):
+    class Meta:
+        model = UnidadeOrganizadora
+
+
+class EditalResource(resources.ModelResource):
+    class Meta:
+        model = Edital

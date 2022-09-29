@@ -49,6 +49,7 @@ MY_APPS = env_as_list('MY_APPS', [
 ])
 THIRD_APPS = env_as_list('THIRD_APPS', [
     'django_extensions',
+    'import_export',
 ])
 DJANGO_APPS = env_as_list('DJANGO_APPS', [
     'django.contrib.admin',
@@ -100,14 +101,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'portal.context_processors.gtag',
-
-                'portal.context_processors.layout_settings',
-                'portal.context_processors.top_menu',
-                'portal.context_processors.user',
-                'adminlte3_admin.context_processors.sidebar_menu',
-                'portal.context_processors.messages',
-                'portal.context_processors.notifications',                
             ]
         },
     },
@@ -142,10 +135,9 @@ USE_TZ = env_as_bool('DJANGO_USE_TZ', True)
 if DEBUG:
     INSTALLED_APPS = INSTALLED_APPS + env_as_list('DEV_APPS', 'debug_toolbar' if DEBUG else '')
     DEBUG_TOOLBAR_CONFIG = {
-        'SHOW_TOOLBAR_CALLBACK': lambda request: request.get_host() in ['localhost', '127.0.0.1'],
+        'SHOW_TOOLBAR_CALLBACK': lambda request: request.get_host() in ['localhost', 'localhost:8000', '127.0.0.1']
     }
     MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware']
-
 
 # # REST Framework
 # REST_FRAMEWORK = {
@@ -173,29 +165,28 @@ if DEBUG:
 
 
 # # Session
-# SESSION_KEY = env("DJANGO_SESSION_KEY", 'ead_portal')
-# SESSION_COOKIE_NAME = env("DJANGO_SESSION_COOKIE_NAME", '%s_sessionid' % SESSION_KEY)
-# SESSION_COOKIE_AGE = env_as_int('DJANGO_SESSION_COOKIE_AGE', 1209600)
-# SESSION_COOKIE_DOMAIN = env('DJANGO_SESSION_COOKIE_DOMAIN', None)
-# SESSION_COOKIE_HTTPONLY = env_as_bool('DJANGO_SESSION_COOKIE_HTTPONLY', False)
-# SESSION_COOKIE_PATH = env("DJANGO_SESSION_COOKIE_PATH", "/")
-# SESSION_COOKIE_SAMESITE = env("DJANGO_SESSION_COOKIE_SAMESITE", 'Lax')
-# SESSION_COOKIE_SECURE = env_as_bool('DJANGO_SESSION_COOKIE_SECURE', False)
-# SESSION_EXPIRE_AT_BROWSER_CLOSE = env_as_bool('DJANGO_SESSION_EXPIRE_AT_BROWSER_CLOSE', False)
-# SESSION_FILE_PATH = env('DJANGO_SESSION_FILE_PATH', None)
-# SESSION_SAVE_EVERY_REQUEST = env_as_bool('DJANGO_SESSION_SAVE_EVERY_REQUEST', False)
-# SESSION_SERIALIZER = env("DJANGO_SESSION_SERIALIZER", 'django.contrib.sessions.serializers.JSONSerializer')
-# # SESSION_ENGINE = env("DJANGO_SESSION_ENGINE", 'redis_sessions.session')
-# # SESSION_REDIS = {
-# #     'host': env("DJANGO_SESSION_REDIS_HOST", 'redis'),
-# #     'port': env_as_int("DJANGO_SESSION_REDIS_PORT", 6379),
-# #     'db': env_as_int("DJANGO_SESSION_REDIS_DB", 0),
-# #     'password': env("DJANGO_SESSION_REDIS_PASSWORD", 'redis_password'),
-# #     'prefix': env("DJANGO_SESSION_REDIS_PREFIX", '%s_session' % session_slug),
-# #     'socket_timeout': env("DJANGO_SESSION_REDIS_SOCKET_TIMEOUT", 0.1),
-# #     'retry_on_timeout': env("DJANGO_SESSION_REDIS_RETRY_ON_TIMEOUT", False),
-# # }
-
+SESSION_KEY = env("DJANGO_SESSION_KEY", 'pss')
+SESSION_COOKIE_NAME = env("DJANGO_SESSION_COOKIE_NAME", f'{SESSION_KEY}_sessionid')
+SESSION_COOKIE_AGE = env_as_int('DJANGO_SESSION_COOKIE_AGE', 1209600)
+SESSION_COOKIE_DOMAIN = env('DJANGO_SESSION_COOKIE_DOMAIN', None)
+SESSION_COOKIE_HTTPONLY = env_as_bool('DJANGO_SESSION_COOKIE_HTTPONLY', False)
+SESSION_COOKIE_PATH = env("DJANGO_SESSION_COOKIE_PATH", "/")
+SESSION_COOKIE_SAMESITE = env("DJANGO_SESSION_COOKIE_SAMESITE", 'Lax')
+SESSION_COOKIE_SECURE = env_as_bool('DJANGO_SESSION_COOKIE_SECURE', False)
+SESSION_EXPIRE_AT_BROWSER_CLOSE = env_as_bool('DJANGO_SESSION_EXPIRE_AT_BROWSER_CLOSE', False)
+SESSION_FILE_PATH = env('DJANGO_SESSION_FILE_PATH', None)
+SESSION_SAVE_EVERY_REQUEST = env_as_bool('DJANGO_SESSION_SAVE_EVERY_REQUEST', False)
+SESSION_SERIALIZER = env("DJANGO_SESSION_SERIALIZER", 'django.contrib.sessions.serializers.JSONSerializer')
+SESSION_ENGINE = env("DJANGO_SESSION_ENGINE", 'redis_sessions.session')
+SESSION_REDIS = {
+    'host': env("DJANGO_SESSION_REDIS_HOST", 'cache'),
+    'port': env_as_int("DJANGO_SESSION_REDIS_PORT", 6379),
+    'db': env_as_int("DJANGO_SESSION_REDIS_DB", 0),
+    'password': env("DJANGO_SESSION_REDIS_PASSWORD", None),
+    'prefix': env("DJANGO_SESSION_REDIS_PREFIX", SESSION_COOKIE_NAME),
+    'socket_timeout': env("DJANGO_SESSION_REDIS_SOCKET_TIMEOUT", 0.1),
+    'retry_on_timeout': env("DJANGO_SESSION_REDIS_RETRY_ON_TIMEOUT", False),
+}
 
 # Auth and Security... some another points impact on security, take care!
 SECRET_KEY = env("DJANGO_SECRET_KEY", 'changeme')
