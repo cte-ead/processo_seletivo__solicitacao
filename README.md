@@ -21,21 +21,15 @@ cd processo_seletivo__solicitacao
 _/deploy
 ```
 
-> O **portal** estará disponível em http://localhost:8000/, o primeiro usuário a acessar será declarado como superusuário e poderá fazer tudo no sistema.
+> A **app** estará disponível em http://localhost:8000/, o primeiro usuário a acessar será declarado como superusuário e poderá fazer tudo no sistema.
 
-> O **SUAP Fake** estará disponível em http://localhost:8001/, o primeiro usuário a acessar será declarado como superusuário e poderá fazer tudo no sistema.
-
-> O **AVA ZL** estará disponível em http://localhost:8011/, o usuário/senha do administrador serão admin/admin.
-
-> O **AVA Presencial** estará disponível em http://localhost:8021/, o usuário/senha do administrador serão admin/admin.
-
-Caso você deseje fazer debug da AVA-Portal, tente:
+Caso você deseje fazer debug do "Solicitação de processo seltivo", tente:
 
 ```bash
-_/portalapp/down
-_/portalapp/debug
+_/down
+_/backs
+_/app/debug
 ```
-
 
 ## Tipo de commits
 
