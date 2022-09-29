@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+source _/functions
+
+cp -r ./confs/examples ./confs/enabled
+
+echo ""; echo_info "Parar o mundo"
+_/down
+
+echo ""; echo_info "Construir as imagens"
+_/build
+
+echo ""; echo_info "Reiniciando o mundo novamente"
+_/up
