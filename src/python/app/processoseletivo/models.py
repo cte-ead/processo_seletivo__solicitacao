@@ -41,28 +41,6 @@ class Polo(Model):
 
 
 
-class Oferta(Model):
-    class Turno(Choices):
-        EAD = Choices.Value(_("EaD"), value='E')
-        HIBRIDO = Choices.Value(_("Híbrido"), value='H')
-        MATUTINO = Choices.Value(_("Matutino"), value='M')
-        VESPERTINO = Choices.Value(_("Vespertino"), value='V')
-        NOTURNO = Choices.Value(_("Noturno"), value='N')
-    
-    nome = CharField(_('nome da vaga'), max_length=255)
-    turno = CharField(_('turno'), max_length=2, choices=Turno, default=Turno.EAD)
-    vagas = PositiveSmallIntegerField(_('vagas'))
-    polo = ForeignKey(Polo, on_delete=PROTECT)
-
-    class Meta:
-        verbose_name = _("Oferta")
-        verbose_name_plural = _("Ofertas")
-        ordering = ['nome']
-
-    def __str__(self):
-        return self.nome
-
-
 class Edital(Model):
 
     class TipoDeAvaliacao(Choices):
@@ -85,7 +63,6 @@ class Edital(Model):
     solicitante = ForeignKey(Usuario, on_delete=PROTECT)
     unidade_organizadora = ForeignKey(UnidadeOrganizadora, on_delete=PROTECT)
     campi = ManyToManyField(Campus)
-    ofertas = ManyToManyField(Oferta)
     descricao = TextField(_('descrição'))
 
     class Meta:
@@ -104,6 +81,28 @@ class Edital(Model):
     @property
     def identificacao(self):
         return f'{self.numeracao}-{self.unidade_organizadora}'
+
+class Oferta(Model):
+    class Turno(Choices):
+        EAD = Choices.Value(_("EaD"), value='E')
+        HIBRIDO = Choices.Value(_("Híbrido"), value='H')
+        MATUTINO = Choices.Value(_("Matutino"), value='M')
+        VESPERTINO = Choices.Value(_("Vespertino"), value='V')
+        NOTURNO = Choices.Value(_("Noturno"), value='N')
+    
+    nome = CharField(_('nome da vaga'), max_length=255)
+    turno = CharField(_('turno'), max_length=2, choices=Turno, default=Turno.EAD)
+    vagas = PositiveSmallIntegerField(_('vagas'))
+    polo = ForeignKey(Polo, on_delete=PROTECT)
+    edital = ForeignKey(Edital, on_delete=PROTECT)
+
+    class Meta:
+        verbose_name = _("oferta")
+        verbose_name_plural = _("ofertas")
+        ordering = ['nome']
+
+    def __str__(self):
+        return self.nome
 
 class TipoArquivo(Model):
     nome = CharField(_('nome'), max_length=255)
