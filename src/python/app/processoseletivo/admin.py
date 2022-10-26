@@ -43,8 +43,8 @@ class EditalAdmin(ImportExportModelAdmin):
 
 @register(Oferta)
 class OfertaAdmin(ImportExportModelAdmin):
-    list_display = ['nome']
-    search_fields = ['nome']
+    list_display = ['nome', 'vagas', 'polo', 'turno']
+    search_fields = ['nome', 'polo']
 
 @register(Polo)
 class OfertaAdmin(ImportExportModelAdmin):

@@ -90,11 +90,12 @@ class Oferta(Model):
         VESPERTINO = Choices.Value(_("Vespertino"), value='V')
         NOTURNO = Choices.Value(_("Noturno"), value='N')
     
+    edital = ForeignKey(Edital, on_delete=PROTECT)
     nome = CharField(_('nome da vaga'), max_length=255)
     turno = CharField(_('turno'), max_length=2, choices=Turno, default=Turno.EAD)
     vagas = PositiveSmallIntegerField(_('vagas'))
     polo = ForeignKey(Polo, on_delete=PROTECT)
-    edital = ForeignKey(Edital, on_delete=PROTECT)
+    
 
     class Meta:
         verbose_name = _("oferta")
