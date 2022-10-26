@@ -51,6 +51,7 @@ class Edital(Model):
     solicitante = ForeignKey(Usuario, on_delete=PROTECT)
     unidade_organizadora = ForeignKey(UnidadeOrganizadora, on_delete=PROTECT)
     campi = ManyToManyField(Campus)
+    descricao = TextField(_('descrição'))
 
     class Meta:
         verbose_name = _("edital")
