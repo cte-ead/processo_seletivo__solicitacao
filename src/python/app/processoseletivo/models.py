@@ -18,7 +18,7 @@ class UnidadeOrganizadora(Model):
 
 
 class Campus(Model):
-    nome = CharField(_('nome'), max_length=255)
+    nome = CharField(_('nome'), max_length=255, help_text=_('Ex.: IFRN Natal-Zona Leste'))
 
     class Meta:
         verbose_name = _("campus")
