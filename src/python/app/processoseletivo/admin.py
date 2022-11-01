@@ -2,7 +2,7 @@ from django.utils.translation import gettext as _
 from django.db.models import Model
 from django.contrib.admin import register, display, ModelAdmin, StackedInline, TabularInline
 from import_export.admin import ImportExportModelAdmin
-from .models import UnidadeOrganizadora, Campus, Edital, TipoArquivo
+from .models import UnidadeOrganizadora, Campus, Edital, TipoArquivo, Oferta, Polo
 
 
 #### 
@@ -40,3 +40,13 @@ class EditalAdmin(ImportExportModelAdmin):
     
     def acoes(self, obj):
         return 'Baixar'
+
+@register(Oferta)
+class OfertaAdmin(ImportExportModelAdmin):
+    list_display = ['edital','nome', 'vagas', 'polo', 'turno']
+    search_fields = ['nome', 'polo']
+
+@register(Polo)
+class OfertaAdmin(ImportExportModelAdmin):
+    list_display = ['nome']
+    search_fields = ['nome']
