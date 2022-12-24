@@ -45,3 +45,4 @@ psycopg2-binary==2.9.3
 # Image
 # 9.2.0 de erro
 pillow==9.1.1
+setuptools>=65.5.1 # not directly required, pinned by Snyk to avoid a vulnerability
